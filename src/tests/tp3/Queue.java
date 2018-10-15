@@ -118,9 +118,14 @@ public class Queue<Item> implements Iterable<Item> {
         return new ListIterator<Item>(first);
     }
 
-    // This method is an additional method added to report last
-    public Node<Item> getLast() {
-        return last;
+    // Reporters
+
+    public Item getFirst() {
+        return (first==null) ? null : first.item;
+    }
+
+    public Item getLast() {
+        return (last==null) ? null : last.item;
     }
 
     // an iterator, doesn't implement remove() since it's optional
