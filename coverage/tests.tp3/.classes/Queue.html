@@ -1,0 +1,306 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Queue</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">tests.tp3</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Queue (tests.tp3)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Queue</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (32/ 32)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Queue$ListIterator</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/ 9)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Queue$Node</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (15/ 15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (42/ 42)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;/******************************************************************************
+<i>2</i>&nbsp; *  Compilation:  javac Queue.java
+<i>3</i>&nbsp; *  Execution:    java Queue &lt; input.txt
+<i>4</i>&nbsp; *  Dependencies: StdIn.java StdOut.java
+<i>5</i>&nbsp; *  Data files:   https://algs4.cs.princeton.edu/13stacks/tobe.txt
+<i>6</i>&nbsp; *
+<i>7</i>&nbsp; *  A generic queue, implemented using a linked list.
+<i>8</i>&nbsp; *
+<i>9</i>&nbsp; *  % java Queue &lt; tobe.txt
+<i>10</i>&nbsp; *  to be or not to be (2 left on queue)
+<i>11</i>&nbsp; *
+<i>12</i>&nbsp; ******************************************************************************/
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;package tests.tp3;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;import java.util.Iterator;
+<i>17</i>&nbsp;import java.util.NoSuchElementException;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;public class Queue&lt;Item&gt; implements Iterable&lt;Item&gt; {
+<i>20</i>&nbsp;    private Node&lt;Item&gt; first;    // beginning of queue
+<i>21</i>&nbsp;    private Node&lt;Item&gt; last;     // end of queue
+<i>22</i>&nbsp;    private int n;               // number of elements on queue
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    // helper linked list class
+<b class="fc"><i>25</i>&nbsp;    private static class Node&lt;Item&gt; {</b>
+<i>26</i>&nbsp;        private Item item;
+<i>27</i>&nbsp;        private Node&lt;Item&gt; next;
+<i>28</i>&nbsp;    }
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    /**
+<i>31</i>&nbsp;     * Initializes an empty queue.
+<i>32</i>&nbsp;     */
+<b class="fc"><i>33</i>&nbsp;    public Queue() {</b>
+<b class="fc"><i>34</i>&nbsp;        first = null;</b>
+<b class="fc"><i>35</i>&nbsp;        last = null;</b>
+<b class="fc"><i>36</i>&nbsp;        n = 0;</b>
+<b class="fc"><i>37</i>&nbsp;    }</b>
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    /**
+<i>40</i>&nbsp;     * Returns true if this queue is empty.
+<i>41</i>&nbsp;     *
+<i>42</i>&nbsp;     * @return {@code true} if this queue is empty; {@code false} otherwise
+<i>43</i>&nbsp;     */
+<i>44</i>&nbsp;    public boolean isEmpty() {
+<b class="fc"><i>45</i>&nbsp;        return first == null;</b>
+<i>46</i>&nbsp;    }
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    /**
+<i>49</i>&nbsp;     * Returns the number of items in this queue.
+<i>50</i>&nbsp;     *
+<i>51</i>&nbsp;     * @return the number of items in this queue
+<i>52</i>&nbsp;     */
+<i>53</i>&nbsp;    public int size() {
+<b class="fc"><i>54</i>&nbsp;        return n;</b>
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    /**
+<i>58</i>&nbsp;     * Returns the item least recently added to this queue.
+<i>59</i>&nbsp;     *
+<i>60</i>&nbsp;     * @return the item least recently added to this queue
+<i>61</i>&nbsp;     * @throws NoSuchElementException if this queue is empty
+<i>62</i>&nbsp;     */
+<i>63</i>&nbsp;    public Item peek() {
+<b class="fc"><i>64</i>&nbsp;        if (isEmpty()) throw new NoSuchElementException(&quot;Queue underflow&quot;);</b>
+<b class="fc"><i>65</i>&nbsp;        return first.item;</b>
+<i>66</i>&nbsp;    }
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    /**
+<i>69</i>&nbsp;     * Adds the item to this queue.
+<i>70</i>&nbsp;     *
+<i>71</i>&nbsp;     * @param item the item to add
+<i>72</i>&nbsp;     */
+<i>73</i>&nbsp;    public void enqueue(Item item) {
+<b class="fc"><i>74</i>&nbsp;        Node&lt;Item&gt; oldlast = last;</b>
+<b class="fc"><i>75</i>&nbsp;        last = new Node&lt;Item&gt;();</b>
+<b class="fc"><i>76</i>&nbsp;        last.item = item;</b>
+<b class="fc"><i>77</i>&nbsp;        last.next = null;</b>
+<b class="fc"><i>78</i>&nbsp;        if (isEmpty()) first = last;</b>
+<b class="fc"><i>79</i>&nbsp;        else oldlast.next = last;</b>
+<b class="fc"><i>80</i>&nbsp;        n++;</b>
+<b class="fc"><i>81</i>&nbsp;    }</b>
+<i>82</i>&nbsp;
+<i>83</i>&nbsp;    /**
+<i>84</i>&nbsp;     * Removes and returns the item on this queue that was least recently added.
+<i>85</i>&nbsp;     *
+<i>86</i>&nbsp;     * @return the item on this queue that was least recently added
+<i>87</i>&nbsp;     * @throws NoSuchElementException if this queue is empty
+<i>88</i>&nbsp;     */
+<i>89</i>&nbsp;    public Item dequeue() {
+<b class="fc"><i>90</i>&nbsp;        if (isEmpty()) throw new NoSuchElementException(&quot;Queue underflow&quot;);</b>
+<b class="fc"><i>91</i>&nbsp;        Item item = first.item;</b>
+<b class="fc"><i>92</i>&nbsp;        first = first.next;</b>
+<b class="fc"><i>93</i>&nbsp;        n--;</b>
+<b class="fc"><i>94</i>&nbsp;        if (isEmpty()) last = null;   // to avoid loitering</b>
+<b class="fc"><i>95</i>&nbsp;        return item;</b>
+<i>96</i>&nbsp;    }
+<i>97</i>&nbsp;
+<i>98</i>&nbsp;    /**
+<i>99</i>&nbsp;     * Returns a string representation of this queue.
+<i>100</i>&nbsp;     *
+<i>101</i>&nbsp;     * @return the sequence of items in FIFO order, separated by spaces
+<i>102</i>&nbsp;     */
+<i>103</i>&nbsp;    public String toString() {
+<b class="fc"><i>104</i>&nbsp;        StringBuilder s = new StringBuilder();</b>
+<b class="fc"><i>105</i>&nbsp;        for (Item item : this) {</b>
+<b class="fc"><i>106</i>&nbsp;            s.append(item);</b>
+<b class="fc"><i>107</i>&nbsp;            s.append(&#39; &#39;);</b>
+<b class="fc"><i>108</i>&nbsp;        }</b>
+<b class="fc"><i>109</i>&nbsp;        return s.toString();</b>
+<i>110</i>&nbsp;    }
+<i>111</i>&nbsp;
+<i>112</i>&nbsp;    /**
+<i>113</i>&nbsp;     * Returns an iterator that iterates over the items in this queue in FIFO order.
+<i>114</i>&nbsp;     *
+<i>115</i>&nbsp;     * @return an iterator that iterates over the items in this queue in FIFO order
+<i>116</i>&nbsp;     */
+<i>117</i>&nbsp;    public Iterator&lt;Item&gt; iterator() {
+<b class="fc"><i>118</i>&nbsp;        return new ListIterator&lt;Item&gt;(first);</b>
+<i>119</i>&nbsp;    }
+<i>120</i>&nbsp;
+<i>121</i>&nbsp;    // Reporters
+<i>122</i>&nbsp;
+<i>123</i>&nbsp;    public Item getFirst() {
+<b class="fc"><i>124</i>&nbsp;        return (first==null) ? null : first.item;</b>
+<i>125</i>&nbsp;    }
+<i>126</i>&nbsp;
+<i>127</i>&nbsp;    public Item getLast() {
+<b class="fc"><i>128</i>&nbsp;        return (last==null) ? null : last.item;</b>
+<i>129</i>&nbsp;    }
+<i>130</i>&nbsp;
+<i>131</i>&nbsp;    // an iterator, doesn&#39;t implement remove() since it&#39;s optional
+<i>132</i>&nbsp;    private class ListIterator&lt;Item&gt; implements Iterator&lt;Item&gt; {
+<i>133</i>&nbsp;        private Node&lt;Item&gt; current;
+<i>134</i>&nbsp;
+<b class="fc"><i>135</i>&nbsp;        public ListIterator(Node&lt;Item&gt; first) {</b>
+<b class="fc"><i>136</i>&nbsp;            current = first;</b>
+<b class="fc"><i>137</i>&nbsp;        }</b>
+<i>138</i>&nbsp;
+<i>139</i>&nbsp;        public boolean hasNext() {
+<b class="fc"><i>140</i>&nbsp;            return current != null;</b>
+<i>141</i>&nbsp;        }
+<i>142</i>&nbsp;
+<i>143</i>&nbsp;        public void remove() {
+<b class="fc"><i>144</i>&nbsp;            throw new UnsupportedOperationException();</b>
+<i>145</i>&nbsp;        }
+<i>146</i>&nbsp;
+<i>147</i>&nbsp;        public Item next() {
+<b class="fc"><i>148</i>&nbsp;            if (!hasNext()) throw new NoSuchElementException();</b>
+<b class="fc"><i>149</i>&nbsp;            Item item = current.item;</b>
+<b class="fc"><i>150</i>&nbsp;            current = current.next;</b>
+<b class="fc"><i>151</i>&nbsp;            return item;</b>
+<i>152</i>&nbsp;        }
+<i>153</i>&nbsp;    }
+<i>154</i>&nbsp;}
+<i>155</i>&nbsp;
+<i>156</i>&nbsp;/******************************************************************************
+<i>157</i>&nbsp; *  Copyright 2002-2018, Robert Sedgewick and Kevin Wayne.
+<i>158</i>&nbsp; *
+<i>159</i>&nbsp; *  This file is part of algs4.jar, which accompanies the textbook
+<i>160</i>&nbsp; *
+<i>161</i>&nbsp; *      Algorithms, 4th edition by Robert Sedgewick and Kevin Wayne,
+<i>162</i>&nbsp; *      Addison-Wesley Professional, 2011, ISBN 0-321-57351-X.
+<i>163</i>&nbsp; *      http://algs4.cs.princeton.edu
+<i>164</i>&nbsp; *
+<i>165</i>&nbsp; *
+<i>166</i>&nbsp; *  algs4.jar is free software: you can redistribute it and/or modify
+<i>167</i>&nbsp; *  it under the terms of the GNU General Public License as published by
+<i>168</i>&nbsp; *  the Free Software Foundation, either version 3 of the License, or
+<i>169</i>&nbsp; *  (at your option) any later version.
+<i>170</i>&nbsp; *
+<i>171</i>&nbsp; *  algs4.jar is distributed in the hope that it will be useful,
+<i>172</i>&nbsp; *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<i>173</i>&nbsp; *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<i>174</i>&nbsp; *  GNU General Public License for more details.
+<i>175</i>&nbsp; *
+<i>176</i>&nbsp; *  You should have received a copy of the GNU General Public License
+<i>177</i>&nbsp; *  along with algs4.jar.  If not, see http://www.gnu.org/licenses.
+<i>178</i>&nbsp; ******************************************************************************/
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-10-15 11:21</div>
+</div>
+</body>
+</html>

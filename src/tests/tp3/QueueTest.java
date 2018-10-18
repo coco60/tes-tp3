@@ -43,6 +43,7 @@ public class QueueTest {
         // TR
         try {
             queue.dequeue();
+            fail();
         } catch (NoSuchElementException ignored) {}
         assertNull(queue.getFirst());
 
@@ -87,6 +88,7 @@ public class QueueTest {
         // TR
         try {
             queue.dequeue();
+            fail();
         } catch (NoSuchElementException ignored) {}
         assertNull(queue.getLast());
 
@@ -127,6 +129,7 @@ public class QueueTest {
         // TR
         try {
             queue.dequeue();
+            fail();
         } catch (NoSuchElementException ignored) {}
         assertEquals(0, queue.size());
 
@@ -138,4 +141,23 @@ public class QueueTest {
 
     }
 
+    // White-box test methods to ensure maximum coverage >:D
+    @Test
+    public void coverageEnqueue() {
+        queue = new Queue<>();
+        assertEquals(0, queue.size());
+        queue.enqueue(1);
+        assertEquals(1, queue.size());
+        queue.enqueue(2);
+        assertEquals(2, queue.size());
+    }
+
+    @Test
+    public void coverageListIterator() {
+        try {
+            queue = new Queue<>();
+            queue.iterator().remove();
+            fail();
+        } catch (UnsupportedOperationException ignored) {}
+    }
 }
