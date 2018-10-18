@@ -22,7 +22,7 @@ public class QueueTest {
         assertEquals(1, (int)queue.getFirst());
 
         // TR
-        queue.dequeue();
+        assertEquals(1, (int) queue.dequeue());
         assertNull(queue.getFirst());
 
         // O
@@ -71,7 +71,7 @@ public class QueueTest {
         assertEquals(1, (int) queue.getLast());
 
         // TR
-        queue.dequeue();
+        assertEquals(1, (int) queue.dequeue());
         assertNull(queue.getLast());
 
         // O
@@ -112,7 +112,7 @@ public class QueueTest {
         assertEquals(1, queue.size());
 
         // TR
-        queue.dequeue();
+        assertEquals(1, (int) queue.dequeue());
         assertEquals(0, queue.size());
 
         // O
