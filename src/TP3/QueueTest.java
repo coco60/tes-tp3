@@ -1,6 +1,7 @@
-package tests.tp3;
+package TP3;
 
 import org.junit.Test;
+import tests.tp3.Queue;
 
 import java.util.NoSuchElementException;
 
