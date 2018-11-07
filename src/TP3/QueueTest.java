@@ -1,7 +1,7 @@
 package TP3;
 
+import TP4.Queue;
 import org.junit.Test;
-import tests.tp3.Queue;
 
 import java.util.NoSuchElementException;
 
